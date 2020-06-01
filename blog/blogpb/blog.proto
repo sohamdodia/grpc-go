@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package blog;
 
+import "google/api/annotations.proto";
+
 option go_package = "blogpb";
 
 message Blog {
@@ -44,8 +46,26 @@ message DeleteBlogResponse {
 }
 
 service BlogService {
-	rpc CreateBlog (CreateBlogRequest) returns (CreateBlogResponse);
-	rpc ReadBlog (ReadBlogRequest) returns (ReadBlogResponse);
-	rpc UpdateBlog (UpdateBlogRequest) returns (UpdateBlogResponse);
-	rpc DeleteBlog (DeleteBlogRequest) returns (DeleteBlogResponse);
+	rpc CreateBlog (CreateBlogRequest) returns (CreateBlogResponse) {
+		option (google.api.http) = {
+			post: "/api/v1/blog",
+			body: "*"
+		};
+	};
+	rpc ReadBlog (ReadBlogRequest) returns (ReadBlogResponse) {
+		option (google.api.http) = {
+			get: "/api/v1/blog",
+		};
+	};
+	rpc UpdateBlog (UpdateBlogRequest) returns (UpdateBlogResponse) {
+		option (google.api.http) = {
+			put: "/api/v1/blog",
+			body: "*"
+		};
+	};
+	rpc DeleteBlog (DeleteBlogRequest) returns (DeleteBlogResponse) {
+		option (google.api.http) = {
+			delete: "/api/v1/blog",
+		};
+	};
 }
